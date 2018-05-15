@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package >
+	<metadata>
+		<id>Celloc.DataTable.Aggregations</id>
+		<version>1.0.0</version>
+		<title>Celloc.DataTable.Aggregations</title>
+		<authors>Sydney du Plooy</authors>
+		<licenseUrl>https://github.com/sduplooy/Celloc.DataTable/blob/master/LICENSE</licenseUrl>
+		<projectUrl>https://github.com/sduplooy/Celloc.DataTable</projectUrl>
+		<requireLicenseAcceptance>false</requireLicenseAcceptance>
+		<description>Aggregation extensions for Celloc.DataTable.</description>
+		<releaseNotes>Adds the ability to perform aggregations (sum, average, min, max, group by) on a DataTable.</releaseNotes>
+		<copyright>Copyright (c) 2018 Sydney du Plooy</copyright>
+		<tags>Celloc Excel DataTable Aggregations</tags>
+		<dependencies>
+			<dependency id="System.ValueTuple" version="4.4.0" />
+			<dependency id="Celloc.DataTable" version="1.2.0" />
+		</dependencies>
+	</metadata>
+	<files>
+		<file src="Celloc.DataTable.Aggregations\bin\Release\Celloc.DataTable.Aggregations.dll" target="lib\net45" />
+	</files>
+</package>
