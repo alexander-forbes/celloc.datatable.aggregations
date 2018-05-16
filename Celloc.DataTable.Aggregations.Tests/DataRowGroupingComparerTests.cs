@@ -24,7 +24,7 @@ namespace Celloc.DataTable.Aggregations.Tests
 		[Test]
 		public void It_should_return_false_when_the_first_data_row_grouping_is_null_and_the_second_is_not()
 		{
-			var y = DataRowGroupingBuilder.From(_DataTable).Key("key").Row().Build();
+			var y = DataRowGroupingBuilder.UseSchema(_DataTable).Key("key").Row().Build();
 			
 			Assert.IsFalse(_Comparer.Equals(null, y));
 		}
@@ -32,7 +32,7 @@ namespace Celloc.DataTable.Aggregations.Tests
 		[Test]
 		public void It_should_return_false_when_the_first_data_row_grouping_is_not_null_and_the_second_is_null()
 		{
-			var x = DataRowGroupingBuilder.From(_DataTable).Key("key").Row().Build();
+			var x = DataRowGroupingBuilder.UseSchema(_DataTable).Key("key").Row().Build();
 
 			Assert.IsFalse(_Comparer.Equals(x, null));
 		}
@@ -40,8 +40,8 @@ namespace Celloc.DataTable.Aggregations.Tests
 		[Test]
 		public void It_should_return_false_when_the_keys_are_not_equal()
 		{
-			var x = DataRowGroupingBuilder.From(_DataTable).Key("key-1").Row().Build();
-			var y = DataRowGroupingBuilder.From(_DataTable).Key("key-2").Row().Build();
+			var x = DataRowGroupingBuilder.UseSchema(_DataTable).Key("key-1").Row().Build();
+			var y = DataRowGroupingBuilder.UseSchema(_DataTable).Key("key-2").Row().Build();
 
 			Assert.IsFalse(_Comparer.Equals(x, y));
 		}
@@ -51,8 +51,8 @@ namespace Celloc.DataTable.Aggregations.Tests
 		{
 			_DataTable.Columns.Add("Column");
 
-			var x = DataRowGroupingBuilder.From(_DataTable).Key("key-1").Row("Value-1").Build();
-			var y = DataRowGroupingBuilder.From(_DataTable).Key("key-1").Row("Value-2").Build();
+			var x = DataRowGroupingBuilder.UseSchema(_DataTable).Key("key-1").Row("Value-1").Build();
+			var y = DataRowGroupingBuilder.UseSchema(_DataTable).Key("key-1").Row("Value-2").Build();
 
 			Assert.IsFalse(_Comparer.Equals(x, y));
 		}
@@ -62,8 +62,8 @@ namespace Celloc.DataTable.Aggregations.Tests
 		{
 			_DataTable.Columns.Add("Value");
 
-			var x = DataRowGroupingBuilder.From(_DataTable).Key("key-1").Row("Value-1").Build();
-			var y = DataRowGroupingBuilder.From(_DataTable).Key("key-1").Row("Value-1").Build();
+			var x = DataRowGroupingBuilder.UseSchema(_DataTable).Key("key-1").Row("Value-1").Build();
+			var y = DataRowGroupingBuilder.UseSchema(_DataTable).Key("key-1").Row("Value-1").Build();
 
 			Assert.IsTrue(_Comparer.Equals(x, y));
 		}
@@ -85,8 +85,8 @@ namespace Celloc.DataTable.Aggregations.Tests
 		[Test]
 		public void It_should_return_a_different_hash_code_for_a_different_key()
 		{
-			var x = DataRowGroupingBuilder.From(_DataTable).Key("key-1").Row().Build();
-			var y = DataRowGroupingBuilder.From(_DataTable).Key("key-2").Row().Build();
+			var x = DataRowGroupingBuilder.UseSchema(_DataTable).Key("key-1").Row().Build();
+			var y = DataRowGroupingBuilder.UseSchema(_DataTable).Key("key-2").Row().Build();
 
 			Assert.AreNotEqual(_Comparer.GetHashCode(x), _Comparer.GetHashCode(y));
 		}
@@ -96,8 +96,8 @@ namespace Celloc.DataTable.Aggregations.Tests
 		{
 			_DataTable.Columns.Add("Column");
 
-			var x = DataRowGroupingBuilder.From(_DataTable).Key("key-1").Row("Value-1").Build();
-			var y = DataRowGroupingBuilder.From(_DataTable).Key("key-1").Row("Value-2").Build();
+			var x = DataRowGroupingBuilder.UseSchema(_DataTable).Key("key-1").Row("Value-1").Build();
+			var y = DataRowGroupingBuilder.UseSchema(_DataTable).Key("key-1").Row("Value-2").Build();
 
 			Assert.AreNotEqual(_Comparer.GetHashCode(x), _Comparer.GetHashCode(y));
 		}
@@ -107,8 +107,8 @@ namespace Celloc.DataTable.Aggregations.Tests
 		{
 			_DataTable.Columns.Add("Column");
 
-			var x = DataRowGroupingBuilder.From(_DataTable).Key("key-1").Row("Value-1").Build();
-			var y = DataRowGroupingBuilder.From(_DataTable).Key("key-1").Row("Value-1").Build();
+			var x = DataRowGroupingBuilder.UseSchema(_DataTable).Key("key-1").Row("Value-1").Build();
+			var y = DataRowGroupingBuilder.UseSchema(_DataTable).Key("key-1").Row("Value-1").Build();
 
 			Assert.AreEqual(_Comparer.GetHashCode(x), _Comparer.GetHashCode(y));
 		}

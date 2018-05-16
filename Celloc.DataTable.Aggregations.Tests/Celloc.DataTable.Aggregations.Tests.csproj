@@ -58,8 +58,10 @@
     <Compile Include="DataRowGroupingBuilder.cs" />
     <Compile Include="DataRowGroupingComparerTests.cs" />
     <Compile Include="DataRowGroupingTests.cs" />
-    <Compile Include="DataTableExtensionsTests.cs" />
+    <Compile Include="GroupByAggregationTests.cs" />
+    <Compile Include="MathOperatorsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SumAggregationTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

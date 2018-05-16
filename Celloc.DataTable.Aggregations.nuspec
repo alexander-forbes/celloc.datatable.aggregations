@@ -14,7 +14,7 @@
 		<tags>Celloc Excel DataTable Aggregations</tags>
 		<dependencies>
 			<dependency id="System.ValueTuple" version="4.4.0" />
-			<dependency id="Celloc.DataTable" version="1.2.0" />
+			<dependency id="Celloc.DataTable" version="1.3.0" />
 		</dependencies>
 	</metadata>
 	<files>

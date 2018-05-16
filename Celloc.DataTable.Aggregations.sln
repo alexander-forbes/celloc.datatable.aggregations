@@ -10,6 +10,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0A5A6BD7-4B67-4A9B-8181-80A811991E38}"
 	ProjectSection(SolutionItems) = preProject
 		Celloc.DataTable.Aggregations.nuspec = Celloc.DataTable.Aggregations.nuspec
+		README.md = README.md
 	EndProjectSection
 EndProject
 Global

@@ -5,7 +5,7 @@ namespace Celloc.DataTable.Aggregations.Tests
 {
 	internal static class DataRowGroupingBuilder
 	{
-		public static KeyBuilder From(System.Data.DataTable schemaDataTable)
+		public static KeyBuilder UseSchema(System.Data.DataTable schemaDataTable)
 		{
 			var table = new System.Data.DataTable();
 
