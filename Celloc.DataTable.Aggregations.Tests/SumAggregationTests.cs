@@ -80,17 +80,5 @@ namespace Celloc.DataTable.Aggregations.Tests
 
 			Assert.AreEqual(25.00M, total);
 		}
-
-		[Test]
-		public void It_should_sum_the_specified_range()
-		{
-			_DataTable.Rows.Add("Price", 18.25);
-			_DataTable.Rows.Add("Tax", 1.75);
-			_DataTable.Rows.Add("Delivery", 5.00);
-
-			var total = _DataTable.Sum<float>("B1:B?");
-
-			Assert.AreEqual(25.00F, total);
-		}
 	}
 }

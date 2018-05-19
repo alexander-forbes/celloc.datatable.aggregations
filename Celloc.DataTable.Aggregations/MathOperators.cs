@@ -1,20 +1,25 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 
 namespace Celloc.DataTable.Aggregations
 {
 	public static class MathOperators
 	{
+		private static readonly IDictionary<Type, Delegate> AddExpressions = new Dictionary<Type, Delegate>();
+
 		public static T Add<T>(T lhs, T rhs)
 		{
-			var left = Expression.Parameter(typeof(T), "lhs");
-			var right = Expression.Parameter(typeof(T), "rhs");
+			if(AddExpressions.ContainsKey(typeof(T)))
+				return (T)AddExpressions[typeof(T)].DynamicInvoke(lhs, rhs);
+			
+			var leftParameter = Expression.Parameter(typeof(T), "lhs");
+			var rightParameter = Expression.Parameter(typeof(T), "rhs");
+			var addExpression = Expression.Add(leftParameter, rightParameter);
 
-			var expression = Expression.Add(left, right);
+			var func = Expression.Lambda<Func<T,T,T>>(addExpression, leftParameter, rightParameter).Compile();
 
-			var x = Expression.Lambda<Func<T,T,T>>(expression, left, right).Compile();
-
-			return x(lhs, rhs);
+			return (T)func.DynamicInvoke(lhs, rhs);
 		}
 	}
 }

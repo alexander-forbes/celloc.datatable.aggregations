@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
 namespace Celloc.DataTable.Aggregations.Tests
 {
@@ -13,7 +8,7 @@ namespace Celloc.DataTable.Aggregations.Tests
 		[Test]
 		public void It_should_add_the_two_values_together()
 		{
-			Assert.AreEqual(3M, MathOperators.Add(1M, 2M));
+			Assert.AreEqual(3, MathOperators.Add(1, 2));
 		}
 	}
 }
