@@ -2,6 +2,9 @@
 [![NuGet Badge](https://buildstats.info/nuget/Celloc.DataTable.Aggregations)](https://www.nuget.org/packages/Celloc.DataTable.Aggregations/)
 
 # Celloc.DataTable.Aggregations
+
+![Logo](https://raw.githubusercontent.com/wiki/sduplooy/Celloc/images/186401-64-plugin.png)
+
 An aggregations extension for Celloc.DataTable.
 
 ## NuGet
