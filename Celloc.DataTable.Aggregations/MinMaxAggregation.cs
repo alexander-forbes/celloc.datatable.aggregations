@@ -104,7 +104,7 @@ namespace Celloc.DataTable.Aggregations
 			return maxDataRowPerGroup;
 		}
 		
-		public static IEnumerable<(object, DataRow)> ApplyOperator<T>(this IEnumerable<DataRowGrouping> dataRowGroupings, int columnIndex, Func<T, T, bool> @delegate) 
+		private static IEnumerable<(object, DataRow)> ApplyOperator<T>(this IEnumerable<DataRowGrouping> dataRowGroupings, int columnIndex, Func<T, T, bool> @delegate) 
 			where T : struct
 		{
 			ArgumentGuards.GuardAgainstNullDataRowGroupings(dataRowGroupings);
