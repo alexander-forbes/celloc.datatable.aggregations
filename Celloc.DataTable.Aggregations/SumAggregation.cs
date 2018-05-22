@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Celloc.DataTable.Aggregations
@@ -11,45 +12,75 @@ namespace Celloc.DataTable.Aggregations
 			ArgumentGuards.GuardAgainstNullRange(range);
 
 			var rangeTuple = dataTable.TranslateRange(range);
-
+		
 			return rangeTuple.HasValue ? Sum<T>(dataTable, rangeTuple.Value) : default(T);
 		}
 
-		public static T Sum<T>(this System.Data.DataTable dataTable, ((int Column, int Row),(int Column, int Row)) range) where T : struct
+		public static T Sum<T>(this System.Data.DataTable dataTable, ((int Column, int Row), (int Column, int Row)) range) where T : struct
 		{
 			ArgumentGuards.GuardAgainstNullDataTable(dataTable);
 			ArgumentGuards.GuardAgainstMultipleColumns(range);
+			ArgumentGuards.GuardAgainstNonNumericType(typeof(T));
 
 			if (!dataTable.Contains(range))
 				return default(T);
 
-			if(!IsNumericType(typeof(T)))
-				throw new ArgumentException("The specified type is not a numeric type.");
+			var column = range.Item1.Column;
+			var total = default(T);
 
-			T total = default(T);
-
-			for(var row = range.Item1.Row; row <= range.Item2.Row; row++)
+			for (var row = range.Item1.Row; row <= range.Item2.Row; row++)
 			{
-				var x = (T)Convert.ChangeType(dataTable.Rows[row].ItemArray.ElementAt(range.Item1.Column), typeof(T));
-				total = MathOperators.Add(x, total);
+				var value = dataTable.GetValue((column, row));
+				var rhs = ChangeType<T>(value);
+				total = MathOperators.Add(total, rhs);
 			}
 
 			return total;
 		}
 
-		private static bool IsNumericType(Type type)
+		public static IEnumerable<(object Key, T Total)> Sum<T>(this IEnumerable<DataRowGrouping> dataRowGroupings, int columnIndex)
 		{
-			return type == typeof(sbyte)
-				|| type == typeof(byte)
-				|| type == typeof(short)
-				|| type == typeof(ushort)
-				|| type == typeof(int)
-				|| type == typeof(uint)
-				|| type == typeof(long)
-				|| type == typeof(ulong)
-				|| type == typeof(float)
-				|| type == typeof(double)
-				|| type == typeof(decimal);
+			ArgumentGuards.GuardAgainstNullDataRowGroupings(dataRowGroupings);
+			ArgumentGuards.GuardAgainstInvalidColumnIndex(dataRowGroupings, columnIndex);
+
+			var groupTotals = new List<(object Key, T Total)>();
+
+			foreach (var grouping in dataRowGroupings)
+			{
+				var groupTotal = SumGroup<T>(grouping, columnIndex);
+				groupTotals.Add((grouping.Key, groupTotal));
+			}
+
+			return groupTotals;
+		}
+
+		private static T SumGroup<T>(DataRowGrouping dataRowGrouping, int columnIndex)
+		{
+			var total = default(T);
+
+			foreach (var row in dataRowGrouping)
+			{
+				var value = row.ItemArray.ElementAt(columnIndex);
+				var rhs = ChangeType<T>(value);
+				total = MathOperators.Add(total, rhs);
+			}
+
+			return total;
+		}
+
+		private static T ChangeType<T>(object value)
+		{
+			if (value == DBNull.Value)
+				return default(T);
+
+			try
+			{
+				return (T)Convert.ChangeType(value, typeof(T));
+			}
+			catch (Exception ex)
+			{
+				throw new Exception($"Value {value} could not be converted to {typeof(T).Name}.", ex);
+			}
 		}
 	}
 }

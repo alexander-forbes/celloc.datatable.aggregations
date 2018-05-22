@@ -4,7 +4,7 @@ using NUnit.Framework;
 namespace Celloc.DataTable.Aggregations.Tests
 {
 	[TestFixture]
-	public class When_calling_sum_on_sum_aggregation
+	public class When_calling_sum_on_sum_aggregation_with_a_data_table
 	{
 		private System.Data.DataTable _DataTable;
 
@@ -79,6 +79,113 @@ namespace Celloc.DataTable.Aggregations.Tests
 			var total = _DataTable.Sum<decimal>("B1:B?");
 
 			Assert.AreEqual(25.00M, total);
+		}
+
+		[Test]
+		public void It_should_throw_an_exception_when_the_value_cannot_be_converted()
+		{
+			_DataTable.Rows.Add("Price", 18.25);
+			_DataTable.Rows.Add("Tax", "1.75%");
+			_DataTable.Rows.Add("Delivery", 5.00);
+
+			var exception = Assert.Throws<Exception>(() => _DataTable.Sum<decimal>("B1:B?"));
+
+			Assert.AreEqual("Value 1.75% could not be converted to Decimal.", exception.Message);
+		}
+
+		[Test]
+		public void It_should_use_the_default_value_when_encountering_a_null_value_in_the_column()
+		{
+			_DataTable.Rows.Add("Price", 18.25);
+			_DataTable.Rows.Add("Tax", null);
+			_DataTable.Rows.Add("Delivery", 5.00);
+
+			var total = _DataTable.Sum<decimal>("B1:B?");
+
+			Assert.AreEqual(23.25M, total);
+		}
+	}
+
+	[TestFixture]
+	public class When_calling_sum_on_sum_aggregation_with_a_data_row_grouping
+	{
+		private System.Data.DataTable _DataTable;
+
+		[SetUp]
+		public void Setup()
+		{
+			_DataTable = new System.Data.DataTable();
+			_DataTable.Columns.Add("Column-1");
+			_DataTable.Columns.Add("Column-2");
+		}
+
+		[Test]
+		public void It_should_throw_an_exception_when_the_data_row_groupings_parameter_is_null()
+		{
+			var exception = Assert.Throws<ArgumentNullException>(() => SumAggregation.Sum<int>(null, 0));
+			Assert.AreEqual($"Value cannot be null.{Environment.NewLine}Parameter name: dataRowGroupings", exception.Message);
+		}
+
+		[Test]
+		public void It_should_throw_an_exception_when_the_column_does_not_exist_in_the_row()
+		{
+			var grouping = DataRowGroupingBuilder.UseSchema(_DataTable)
+				.Key("key")
+				.Row("Value-1", 200M)
+				.Row("Value-2", 300M)
+				.Build();
+
+			var exception = Assert.Throws<ArgumentOutOfRangeException>(() => new [] { grouping }.Sum<int>(3));
+			Assert.AreEqual($"DataRow does not have a column at index 3.{Environment.NewLine}Parameter name: columnIndex", exception.Message);
+		}
+
+		[Test]
+		public void It_should_throw_an_exception_when_the_column_index_is_less_than_zero()
+		{
+			var grouping = DataRowGroupingBuilder.UseSchema(_DataTable)
+				.Key("key")
+				.Row("Value-1", 200M)
+				.Row("Value-2", 300M)
+				.Build();
+
+			var exception = Assert.Throws<ArgumentOutOfRangeException>(() => new [] { grouping }.Sum<int>(-1));
+			Assert.AreEqual($"DataRow does not have a column at index -1.{Environment.NewLine}Parameter name: columnIndex", exception.Message);
+		}
+
+		[Test]
+		public void It_should_sum_the_values_in_the_specified_column()
+		{
+			_DataTable.Rows.Add("Price", 22.75);
+			_DataTable.Rows.Add("Price", 18.25);
+			_DataTable.Rows.Add("Price", 3);
+			_DataTable.Rows.Add("Tax", 15);
+			_DataTable.Rows.Add("Delivery", 5);
+
+			var groupTotals = _DataTable.GroupBy("A1:A?").Sum<decimal>(1);
+
+			CollectionAssert.AreEquivalent(new [] { 
+				("Price", 44M),
+				("Tax", 15M),
+				("Delivery", 5M)
+			}, groupTotals);
+		}
+
+		[Test]
+		public void It_should_use_the_default_value_when_encountering_a_null_value_in_the_column()
+		{
+			_DataTable.Rows.Add("Price", 22.75);
+			_DataTable.Rows.Add("Price", 18.25);
+			_DataTable.Rows.Add("Price", 3);
+			_DataTable.Rows.Add("Tax", null);
+			_DataTable.Rows.Add("Delivery", 5);
+
+			var groupTotals = _DataTable.GroupBy("A1:A?").Sum<decimal>(1);
+
+			CollectionAssert.AreEquivalent(new [] { 
+				("Price", 44M),
+				("Tax", 0M),
+				("Delivery", 5M)
+			}, groupTotals);
 		}
 	}
 }

@@ -30,11 +30,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Celloc, Version=2.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Celloc.2.3.0\lib\net45\Celloc.dll</HintPath>
+    <Reference Include="Celloc, Version=2.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Celloc.2.4.0\lib\net45\Celloc.dll</HintPath>
     </Reference>
-    <Reference Include="Celloc.DataTable, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Celloc.DataTable.1.3.0\lib\net45\Celloc.DataTable.dll</HintPath>
+    <Reference Include="Celloc.DataTable, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Celloc.DataTable.1.4.0\lib\net45\Celloc.DataTable.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
