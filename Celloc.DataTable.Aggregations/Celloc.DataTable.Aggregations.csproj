@@ -52,10 +52,12 @@
     <Compile Include="DataRowGroupingComparer.cs" />
     <Compile Include="DataRowGrouping.cs" />
     <Compile Include="GroupByAggregation.cs" />
-    <Compile Include="MathOperators.cs" />
+    <Compile Include="Operators.cs" />
+    <Compile Include="MinMaxAggregation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ArgumentGuards.cs" />
     <Compile Include="SumAggregation.cs" />
+    <Compile Include="TypeChanger.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

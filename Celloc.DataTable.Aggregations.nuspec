@@ -10,7 +10,7 @@
 		<iconUrl>https://raw.githubusercontent.com/wiki/sduplooy/Celloc/images/186401-64-plugin.png</iconUrl>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
 		<description>Aggregation extensions for Celloc.DataTable.</description>
-		<releaseNotes>Adds the ability to perform aggregations (sum, group by) on a DataTable.</releaseNotes>
+		<releaseNotes>Adds the ability to perform aggregations (sum, min, max, group by) on a DataTable.</releaseNotes>
 		<copyright>Copyright (c) 2018 Sydney du Plooy</copyright>
 		<tags>Celloc Excel DataTable Aggregations</tags>
 		<dependencies>

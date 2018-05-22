@@ -6,7 +6,8 @@ namespace Celloc.DataTable.Aggregations
 {
 	public static class SumAggregation
 	{
-		public static T Sum<T>(this System.Data.DataTable dataTable, string range) where T : struct
+		public static T Sum<T>(this System.Data.DataTable dataTable, string range) 
+			where T : struct
 		{
 			ArgumentGuards.GuardAgainstNullDataTable(dataTable);
 			ArgumentGuards.GuardAgainstNullRange(range);
@@ -16,7 +17,8 @@ namespace Celloc.DataTable.Aggregations
 			return rangeTuple.HasValue ? Sum<T>(dataTable, rangeTuple.Value) : default(T);
 		}
 
-		public static T Sum<T>(this System.Data.DataTable dataTable, ((int Column, int Row), (int Column, int Row)) range) where T : struct
+		public static T Sum<T>(this System.Data.DataTable dataTable, ((int Column, int Row), (int Column, int Row)) range) 
+			where T : struct
 		{
 			ArgumentGuards.GuardAgainstNullDataTable(dataTable);
 			ArgumentGuards.GuardAgainstMultipleColumns(range);
@@ -31,14 +33,15 @@ namespace Celloc.DataTable.Aggregations
 			for (var row = range.Item1.Row; row <= range.Item2.Row; row++)
 			{
 				var value = dataTable.GetValue((column, row));
-				var rhs = ChangeType<T>(value);
-				total = MathOperators.Add(total, rhs);
+				var rhs = TypeChanger.ChangeType<T>(value);
+				total = Operators.Add(total, rhs);
 			}
 
 			return total;
 		}
 
-		public static IEnumerable<(object Key, T Total)> Sum<T>(this IEnumerable<DataRowGrouping> dataRowGroupings, int columnIndex)
+		public static IEnumerable<(object Key, T Total)> Sum<T>(this IEnumerable<DataRowGrouping> dataRowGroupings, int columnIndex) 
+			where T : struct
 		{
 			ArgumentGuards.GuardAgainstNullDataRowGroupings(dataRowGroupings);
 			ArgumentGuards.GuardAgainstInvalidColumnIndex(dataRowGroupings, columnIndex);
@@ -55,32 +58,18 @@ namespace Celloc.DataTable.Aggregations
 		}
 
 		private static T SumGroup<T>(DataRowGrouping dataRowGrouping, int columnIndex)
+			where T : struct
 		{
 			var total = default(T);
 
 			foreach (var row in dataRowGrouping)
 			{
 				var value = row.ItemArray.ElementAt(columnIndex);
-				var rhs = ChangeType<T>(value);
-				total = MathOperators.Add(total, rhs);
+				var rhs = TypeChanger.ChangeType<T>(value);
+				total = Operators.Add(total, rhs);
 			}
 
 			return total;
-		}
-
-		private static T ChangeType<T>(object value)
-		{
-			if (value == DBNull.Value)
-				return default(T);
-
-			try
-			{
-				return (T)Convert.ChangeType(value, typeof(T));
-			}
-			catch (Exception ex)
-			{
-				throw new Exception($"Value {value} could not be converted to {typeof(T).Name}.", ex);
-			}
 		}
 	}
 }
