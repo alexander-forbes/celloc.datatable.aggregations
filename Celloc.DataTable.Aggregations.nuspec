@@ -5,8 +5,8 @@
 		<version>1.0.0</version>
 		<title>Celloc.DataTable.Aggregations</title>
 		<authors>Sydney du Plooy</authors>
-		<licenseUrl>https://github.com/sduplooy/Celloc.DataTable/blob/master/LICENSE</licenseUrl>
-		<projectUrl>https://github.com/sduplooy/Celloc.DataTable</projectUrl>
+		<licenseUrl>https://github.com/sduplooy/Celloc.DataTable.Aggregations/blob/master/LICENSE</licenseUrl>
+		<projectUrl>https://github.com/sduplooy/Celloc.DataTable.Aggregations</projectUrl>
 		<iconUrl>https://raw.githubusercontent.com/wiki/sduplooy/Celloc/images/186401-64-plugin.png</iconUrl>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
 		<description>Aggregation extensions for Celloc.DataTable.</description>
