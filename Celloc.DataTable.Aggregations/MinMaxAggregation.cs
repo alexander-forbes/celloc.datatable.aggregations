@@ -73,35 +73,13 @@ namespace Celloc.DataTable.Aggregations
 		public static IEnumerable<(object, DataRow)> Max<T>(this IEnumerable<DataRowGrouping> dataRowGroupings, int columnIndex) 
 			where T : struct
 		{
-			ArgumentGuards.GuardAgainstNullDataRowGroupings(dataRowGroupings);
-			ArgumentGuards.GuardAgainstInvalidColumnIndex(dataRowGroupings, columnIndex);
-
-			var maxDataRowPerGroup = new List<(object, DataRow)>();
-
-			foreach(var group in dataRowGroupings)
-			{
-				var maxRow = FindRowInGroup<T>(group, columnIndex, Operators.GreaterThan);
-				maxDataRowPerGroup.Add((group.Key, maxRow));
-			}
-
-			return maxDataRowPerGroup;
+			return ApplyOperator<T>(dataRowGroupings, columnIndex, Operators.GreaterThan);
 		}
 
 		public static IEnumerable<(object, DataRow)> Min<T>(this IEnumerable<DataRowGrouping> dataRowGroupings, int columnIndex) 
 			where T : struct
 		{
-			ArgumentGuards.GuardAgainstNullDataRowGroupings(dataRowGroupings);
-			ArgumentGuards.GuardAgainstInvalidColumnIndex(dataRowGroupings, columnIndex);
-
-			var maxDataRowPerGroup = new List<(object, DataRow)>();
-
-			foreach(var group in dataRowGroupings)
-			{
-				var maxRow = FindRowInGroup<T>(group, columnIndex, Operators.LessThan);
-				maxDataRowPerGroup.Add((group.Key, maxRow));
-			}
-
-			return maxDataRowPerGroup;
+			return ApplyOperator<T>(dataRowGroupings, columnIndex, Operators.LessThan);
 		}
 		
 		private static IEnumerable<(object, DataRow)> ApplyOperator<T>(this IEnumerable<DataRowGrouping> dataRowGroupings, int columnIndex, Func<T, T, bool> @delegate) 
@@ -110,15 +88,15 @@ namespace Celloc.DataTable.Aggregations
 			ArgumentGuards.GuardAgainstNullDataRowGroupings(dataRowGroupings);
 			ArgumentGuards.GuardAgainstInvalidColumnIndex(dataRowGroupings, columnIndex);
 
-			var maxDataRowPerGroup = new List<(object, DataRow)>();
+			var dataRowPerGroup = new List<(object, DataRow)>();
 
 			foreach(var group in dataRowGroupings)
 			{
-				var maxRow = FindRowInGroup(group, columnIndex, @delegate);
-				maxDataRowPerGroup.Add((group.Key, maxRow));
+				var row = FindRowInGroup(group, columnIndex, @delegate);
+				dataRowPerGroup.Add((group.Key, row));
 			}
 
-			return maxDataRowPerGroup;
+			return dataRowPerGroup;
 		}
 
 		private static DataRow FindRowInGroup<T>(DataRowGrouping group, int columnIndex, Func<T, T, bool> @delegate) 
