@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 
@@ -20,6 +21,34 @@ namespace Celloc.DataTable.Aggregations
 		{
 			ArgumentGuards.GuardAgainstNullDataTable(dataTable);
 			return dataTable.Contains(range) ? GroupRows(dataTable, range) : null;
+		}
+
+		public static IEnumerable<DataRowGrouping> GroupBy(this IEnumerable<DataRowGrouping> dataRowGroupings, int columnIndex)
+		{
+			ArgumentGuards.GuardAgainstNullDataRowGroupings(dataRowGroupings);
+			ArgumentGuards.GuardAgainstInvalidColumnIndex(dataRowGroupings, columnIndex);
+
+			var groupings = new List<DataRowGrouping>();
+
+			foreach(var grouping in dataRowGroupings)
+			{
+				var groupRows = new Dictionary<object, List<DataRow>>();
+
+				foreach(var row in grouping)
+				{
+					var groupKey = row.ItemArray.ElementAt(columnIndex);
+
+					if (!groupRows.ContainsKey(groupKey))
+						groupRows.Add(groupKey, new List<DataRow>());
+
+					groupRows[groupKey].Add(row);
+				}
+
+				var enumerable = groupRows.Select(kvp => new DataRowGrouping(kvp.Key, kvp.Value));
+				groupings.AddRange(enumerable);
+			}
+
+			return groupings;
 		}
 
 		private static IEnumerable<DataRowGrouping> GroupRows(System.Data.DataTable dataTable, ((int Column, int Row), (int Column, int Row)) range)

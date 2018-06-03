@@ -2,7 +2,7 @@
 <package >
 	<metadata>
 		<id>Celloc.DataTable.Aggregations</id>
-		<version>1.0.1</version>
+		<version>1.1.0</version>
 		<title>Celloc.DataTable.Aggregations</title>
 		<authors>Sydney du Plooy</authors>
 		<licenseUrl>https://github.com/sduplooy/Celloc.DataTable.Aggregations/blob/master/LICENSE</licenseUrl>
@@ -10,7 +10,7 @@
 		<iconUrl>https://raw.githubusercontent.com/wiki/sduplooy/Celloc/images/186401-64-plugin.png</iconUrl>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
 		<description>Aggregation extensions for Celloc.DataTable.</description>
-		<releaseNotes>Fixed compatibility with Celloc.DataTable 1.5.0.</releaseNotes>
+		<releaseNotes>Extends GroupBy functionality to group data row groupings.</releaseNotes>
 		<copyright>Copyright (c) 2018 Sydney du Plooy</copyright>
 		<tags>Celloc Excel DataTable Aggregations</tags>
 		<dependencies>
