@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>netstandard2.1</TargetFramework>
+		<OutputType>Library</OutputType>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+		<Authors>Alexander Forbes Group Services (Pty) Ltd.</Authors>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageProjectUrl>https://github.com/alexander-forbes/celloc.datatable.aggregations</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/alexander-forbes/celloc.datatable.aggregations.git</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<Description>Aggregation extensions for Celloc.DataTable.</Description>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="Celloc.DataTable" Version="2.0.1" />
+		<PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+		<PackageReference Include="Celloc" Version="3.0.1" />
+	</ItemGroup>
+</Project>
